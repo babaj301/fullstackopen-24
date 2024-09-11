@@ -33,7 +33,7 @@ const App = () => {
     );
   };
 
-  const Content = ({ part, exercises }) => {
+  const Content = ({ parts }) => {
     return (
       <div>
         <Part part={parts[0].name} exercises={parts[0].exercises} />
@@ -43,10 +43,13 @@ const App = () => {
     );
   };
 
-  const Total = ({ ex1, ex2, ex3 }) => {
+  const Total = ({ parts }) => {
     return (
       <div>
-        <p>Number of exercises {ex1 + ex2 + ex3}</p>
+        <p>
+          Number of exercises
+          {parts[0].exercises + parts[1].exercises + parts[2].exercises}
+        </p>
       </div>
     );
   };
@@ -54,12 +57,8 @@ const App = () => {
   return (
     <div>
       <Header course={course} />
-      <Content />
-      <Total
-        ex1={parts[0].exercises}
-        ex2={parts[1].exercises}
-        ex3={parts[2].exercises}
-      />
+      <Content parts={parts} />
+      <Total parts={parts} />
     </div>
   );
 };
