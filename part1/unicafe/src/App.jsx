@@ -4,11 +4,11 @@ const Button = ({ text, handleClick }) => {
   return <button onClick={handleClick}>{text}</button>;
 };
 
-const Display = ({ text, number }) => {
+const Display = ({ text, value }) => {
   return (
     <div>
       {text}
-      {number}
+      {value}
     </div>
   );
 };
@@ -30,6 +30,8 @@ function App() {
     setBad(bad + 1);
   };
 
+  const sum = bad + neutral + good;
+
   return (
     <div>
       <h1>Give Feedback</h1>
@@ -38,9 +40,12 @@ function App() {
       <Button text={'bad'} handleClick={handleBad} />
       <h1>Statistics</h1>
 
-      <Display text={'good'} number={good} />
-      <Display text={'neutral'} number={neutral} />
-      <Display text={'bad'} number={bad} />
+      <Display text={'good'} value={good} />
+      <Display text={'neutral'} value={neutral} />
+      <Display text={'bad'} value={bad} />
+      <Display text={'all'} value={sum} />
+      <Display text={'average'} value={(good * 1 + bad * -1) / sum} />
+      <Display text={'positive'} value={`${(good / sum) * 100} %`} />
     </div>
   );
 }
