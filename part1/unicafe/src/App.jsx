@@ -14,6 +14,9 @@ const Display = ({ text, value }) => {
 };
 
 const Statistics = ({ sum, good, bad, neutral }) => {
+  if (sum === 0) {
+    return <div>No feedback given</div>;
+  }
   return (
     <div>
       <Display text={'good'} value={good} />
