@@ -13,6 +13,19 @@ const Display = ({ text, value }) => {
   );
 };
 
+const Statistics = ({ sum, good, bad, neutral }) => {
+  return (
+    <div>
+      <Display text={'good'} value={good} />
+      <Display text={'neutral'} value={neutral} />
+      <Display text={'bad'} value={bad} />
+      <Display text={'all'} value={sum} />
+      <Display text={'average'} value={(good * 1 + bad * -1) / sum} />
+      <Display text={'positive'} value={`${(good / sum) * 100} %`} />
+    </div>
+  );
+};
+
 function App() {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
@@ -39,13 +52,7 @@ function App() {
       <Button text={'neutral'} handleClick={handleNeutral} />
       <Button text={'bad'} handleClick={handleBad} />
       <h1>Statistics</h1>
-
-      <Display text={'good'} value={good} />
-      <Display text={'neutral'} value={neutral} />
-      <Display text={'bad'} value={bad} />
-      <Display text={'all'} value={sum} />
-      <Display text={'average'} value={(good * 1 + bad * -1) / sum} />
-      <Display text={'positive'} value={`${(good / sum) * 100} %`} />
+      <Statistics sum={sum} good={good} bad={bad} neutral={neutral} />
     </div>
   );
 }
