@@ -17,29 +17,31 @@ const App = () => {
 
   const handleNext = () => {
     const randomNum = Math.floor(Math.random() * 8);
-
     console.log(randomNum);
-
     setSelected(randomNum);
   };
 
-  const handleVotes = (number) => {
+  const handleVotes = () => {
     const copy = [...votes];
-
     console.log(copy);
-    return () => {
-      copy[number] += 1;
-      setVotes(copy);
-    };
+    copy[selected] += 1;
+    setVotes(copy);
   };
+
+  const maxNumber = Math.max(...votes);
 
   return (
     <div>
       {anecdotes[selected]}
       <div>
         <p>has {votes[selected]}votes</p>
-        <button onClick={handleVotes(selected)}>Vote</button>
+        <button onClick={handleVotes}>Vote</button>
         <button onClick={handleNext}>next anecdote</button>
+      </div>
+
+      <div>
+        <h1>Anecdote with the most votes</h1>
+        <div>{anecdotes[votes.indexOf(maxNumber)]}</div>
       </div>
     </div>
   );
