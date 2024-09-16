@@ -24,11 +24,11 @@ const App = () => {
     );
   };
 
-  const Part = ({ part, exercises }) => {
+  const Part = ({ part }) => {
     return (
       <div>
         <p>
-          {part} {exercises}
+          {part.name} {part.exercises}
         </p>
       </div>
     );
@@ -37,9 +37,9 @@ const App = () => {
   const Content = ({ parts }) => {
     return (
       <div>
-        <Part part={parts[0].name} exercises={parts[0].exercises} />
-        <Part part={parts[1].name} exercises={parts[1].exercises} />
-        <Part part={parts[2].name} exercises={parts[2].exercises} />
+        <Part part={parts[0]} />
+        <Part part={parts[1]} />
+        <Part part={parts[2]} />
       </div>
     );
   };
