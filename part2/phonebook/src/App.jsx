@@ -2,16 +2,24 @@ import { useState } from 'react';
 
 const App = () => {
   const [persons, setPersons] = useState([{ name: 'Arto Hellas' }]);
-  const [newName, setNewName] = useState('hello');
+  const [newName, setNewName] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const newPerson = {
       name: newName,
     };
+    const exist = persons.find((person) => {
+      return JSON.stringify(person.name) === JSON.stringify(newPerson.name);
+    });
 
-    setPersons(persons.concat(newPerson));
-    console.log(persons);
+    if (exist) {
+      alert(`${newName} is already added to phonebook`);
+      setNewName('');
+    } else {
+      setPersons(persons.concat(newPerson));
+      setNewName('');
+    }
   };
 
   const handleChange = (event) => {
