@@ -27,10 +27,26 @@ const Course = ({ course }) => {
     );
   };
 
+  const Total = ({ parts }) => {
+    const sum = parts.reduce(
+      (accumulator, currentValue) => accumulator + currentValue.exercises,
+      0
+    );
+    return (
+      <div>
+        <p>
+          Number of exercises
+          {sum}
+        </p>
+      </div>
+    );
+  };
+
   return (
     <div>
       <Header course={course.name} />
       <Content parts={course.parts} />
+      <Total parts={course.parts} />
     </div>
   );
 };
