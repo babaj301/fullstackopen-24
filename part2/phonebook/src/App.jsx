@@ -33,12 +33,19 @@ const App = () => {
 
     if (exist) {
       alert(`${newName} is already added to phonebook`);
+
       setNewName('');
       setNewNumber('');
     } else {
-      setPersons(persons.concat(newPerson));
-      setNewName('');
-      setNewNumber('');
+      axios
+        .post('http://localhost:3001/persons', newPerson)
+        .then((res) => {
+          console.log(res.data);
+          setPersons(persons.concat(res.data));
+          setNewName('');
+          setNewNumber('');
+        })
+        .catch((err) => console.error(err));
     }
   };
 
