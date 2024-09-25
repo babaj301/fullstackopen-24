@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
-import Persons from './components/Persons';
+import PersonsDisplay from './components/PersonsDisplay';
 import personService from './services/persons';
 
 const App = () => {
@@ -50,6 +50,21 @@ const App = () => {
     }
   };
 
+  const handleDelete = (id) => {
+    const person = persons.find((p) => p.id === id);
+    const confirm = window.confirm(
+      `Are you sure you want to delete ${person.name}`
+    );
+
+    confirm
+      ? personService.deletePerson(id).then((res) => {
+          console.log(res);
+        })
+      : alert('Thanks for not deleting them');
+
+    setPersons(persons.filter((person) => person.id !== id));
+  };
+
   const handleName = (event) => {
     setNewName(event.target.value);
   };
@@ -84,8 +99,11 @@ const App = () => {
       />
 
       <h2>Numbers</h2>
-
-      <Persons filtered={filtered} persons={persons} />
+      <PersonsDisplay
+        persons={persons}
+        filtered={filtered}
+        deletePerson={handleDelete}
+      />
     </div>
   );
 };
