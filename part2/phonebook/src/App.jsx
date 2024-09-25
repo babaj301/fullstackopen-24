@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
+import personService from './services/persons';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -12,13 +12,15 @@ const App = () => {
 
   useEffect(() => {
     console.log('effect');
-    axios
-      .get('http://localhost:3001/persons')
-      .then((res) => {
-        console.log(res);
-        setPersons(res.data);
+    personService
+      .getAll()
+      .then((person) => {
+        setPersons(person);
+        console.log(person);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   const handleSubmit = (event) => {
@@ -33,15 +35,14 @@ const App = () => {
 
     if (exist) {
       alert(`${newName} is already added to phonebook`);
-
       setNewName('');
       setNewNumber('');
     } else {
-      axios
-        .post('http://localhost:3001/persons', newPerson)
-        .then((res) => {
-          console.log(res.data);
-          setPersons(persons.concat(res.data));
+      console.log('person entering');
+      personService
+        .addPerson(newPerson)
+        .then((person) => {
+          setPersons(persons.concat(person));
           setNewName('');
           setNewNumber('');
         })
@@ -61,8 +62,8 @@ const App = () => {
     setSearch(event.target.value);
   };
 
-  const filtered = persons.filter((e) => {
-    return e.name.toLowerCase().includes(search);
+  const filtered = persons.filter((p) => {
+    return p.name.toLowerCase().includes(search);
   });
 
   console.log(filtered);
