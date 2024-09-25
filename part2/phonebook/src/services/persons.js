@@ -13,9 +13,14 @@ const addPerson = (newPerson) => {
   });
 };
 
+const editPerson = (editedInfo) => {
+  const request = axios.put(`${url}/${editedInfo.id}`, editedInfo);
+  return request.then((res) => res.data);
+};
+
 const deletePerson = (id) => {
   const request = axios.delete(`${url}/${id}`);
   return request.then((res) => res.data);
 };
 
-export default { getAll, addPerson, deletePerson };
+export default { getAll, addPerson, deletePerson, editPerson };

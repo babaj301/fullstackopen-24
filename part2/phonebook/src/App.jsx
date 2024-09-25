@@ -33,9 +33,23 @@ const App = () => {
       return JSON.stringify(person.name) === JSON.stringify(newPerson.name);
     });
 
+    console.log(exist);
+
     if (exist) {
-      alert(`${newName} is already added to phonebook`);
-      setNewName('');
+      // alert(`${newName} is already added to phonebook`);
+      const agreeToChange = window.confirm(
+        `${newName} is already added to phonebook, replace the old number with a new one?`
+      );
+
+      const editedInfo = { ...exist, number: newNumber };
+
+      agreeToChange
+        ? personService.editPerson(editedInfo).then((person) => {
+            setNewName('');
+            setNewNumber('');
+            console.log(person);
+          })
+        : setNewName('');
       setNewNumber('');
     } else {
       console.log('person entering');
