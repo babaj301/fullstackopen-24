@@ -93,6 +93,7 @@ const App = () => {
             alert(
               `Information of ${person.name} has already been removed from server`
             );
+            console.log(err);
           })
       : alert('Thanks for not deleting them');
 
