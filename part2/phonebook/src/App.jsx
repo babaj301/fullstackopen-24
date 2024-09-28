@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
+import Notification from './components/Notification';
 import PersonsDisplay from './components/PersonsDisplay';
 import personService from './services/persons';
 
@@ -9,6 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [search, setSearch] = useState('');
+  const [popup, setPopup] = useState(null);
 
   useEffect(() => {
     console.log('effect');
@@ -45,8 +47,14 @@ const App = () => {
 
       agreeToChange
         ? personService.editPerson(editedInfo).then((person) => {
+            setPopup(`Changed ${newPerson.name}'s number`);
+
+            setTimeout(() => {
+              setPopup(null);
+            }, 3000);
             setNewName('');
             setNewNumber('');
+
             console.log(person);
           })
         : setNewName('');
@@ -57,6 +65,11 @@ const App = () => {
         .addPerson(newPerson)
         .then((person) => {
           setPersons(persons.concat(person));
+          setPopup(`Added ${newPerson.name}`);
+
+          setTimeout(() => {
+            setPopup(null);
+          }, 3000);
           setNewName('');
           setNewNumber('');
         })
@@ -103,6 +116,7 @@ const App = () => {
 
       <Filter search={search} handleSearch={handleSearch} />
       <h2>add a new</h2>
+      <Notification message={popup} />
 
       <PersonForm
         handleSubmit={handleSubmit}
