@@ -84,9 +84,16 @@ const App = () => {
     );
 
     confirm
-      ? personService.deletePerson(id).then((res) => {
-          console.log(res);
-        })
+      ? personService
+          .deletePerson(id)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            alert(
+              `Information of ${person.name} has already been removed from server`
+            );
+          })
       : alert('Thanks for not deleting them');
 
     setPersons(persons.filter((person) => person.id !== id));
