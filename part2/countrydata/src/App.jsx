@@ -52,10 +52,12 @@ const App = () => {
               </div>
 
               <div>
-                <h2>
-                  Languages:
-                  {/* {n.languages} */}
-                </h2>
+                <h2> Languages:</h2>
+                <p>
+                  {Object.values(n.languages).map((m) => {
+                    return <li key={n.cca3}>{m}</li>;
+                  })}
+                </p>
               </div>
               <div>{n.flag}</div>
             </div>
