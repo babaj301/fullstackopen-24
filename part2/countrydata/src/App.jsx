@@ -9,7 +9,7 @@ const App = () => {
   const handleChange = (event) => {
     setCountryValue(event.target.value);
     const found = allCountries.filter((n) =>
-      n.name.common.toLowerCase().includes(countryValue)
+      n.name.common.toLowerCase().includes(countryValue.toLowerCase())
     );
     setFiltered(found);
 
@@ -55,7 +55,7 @@ const App = () => {
                 <h2> Languages:</h2>
                 <p>
                   {Object.values(n.languages).map((m) => {
-                    return <li key={n.cca3}>{m}</li>;
+                    return <li key={m}>{m}</li>;
                   })}
                 </p>
               </div>
