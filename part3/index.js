@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = 3001;
 
-const persons = [
+let persons = [
   {
     id: '1',
     name: 'Arto Hellas',
@@ -46,6 +46,14 @@ app.get('/api/persons/:id', (req, res) => {
   } else {
     res.status(204).end();
   }
+});
+
+app.delete('/api/persons/:id', (req, res) => {
+  const id = req.params.id;
+  persons = persons.filter((n) => n.id !== id);
+  console.log(persons);
+
+  res.status(204);
 });
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
