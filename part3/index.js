@@ -5,7 +5,11 @@ const morgan = require('morgan');
 
 app.use(express.json());
 
-app.use(morgan('tiny'));
+app.use(morgan('tiny, :data'));
+
+morgan.token('data', (req, res) => {
+  return JSON.stringify(req.body);
+});
 
 let persons = [
   {
