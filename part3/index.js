@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const PORT = 3001;
 
+app.use(express.json());
+
 let persons = [
   {
     id: '1',
@@ -51,9 +53,22 @@ app.get('/api/persons/:id', (req, res) => {
 app.delete('/api/persons/:id', (req, res) => {
   const id = req.params.id;
   persons = persons.filter((n) => n.id !== id);
-  console.log(persons);
-
   res.status(204);
+});
+
+const generateId = () => {
+  const id = Math.max(...persons.map((n) => n.id)) + 1;
+  return String(id);
+};
+
+app.post('/api/persons', (req, res) => {
+  const person = req.body;
+  person.id = generateId();
+
+  persons = persons.concat(person);
+  res.json(person);
+
+  console.log(persons);
 });
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
