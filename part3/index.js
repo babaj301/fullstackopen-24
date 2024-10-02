@@ -63,12 +63,24 @@ const generateId = () => {
 
 app.post('/api/persons', (req, res) => {
   const person = req.body;
+
+  if (!person.name) {
+    res.status(400).json({ error: 'name is missing' });
+  }
+  if (!person.number) {
+    res.status(400).json({ error: 'number is missing' });
+  }
+
+  const exists = persons.find((n) => n.name === person.name);
+
+  if (exists) {
+    res.status(400).json({ error: 'name must be unique' });
+  }
+
   person.id = generateId();
 
   persons = persons.concat(person);
   res.json(person);
-
-  console.log(persons);
 });
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
