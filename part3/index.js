@@ -37,4 +37,15 @@ app.get('/info', (req, res) => {
   );
 });
 
+app.get('/api/persons/:id', (req, res) => {
+  const id = req.params.id;
+  const person = persons.find((n) => n.id === id);
+
+  if (person) {
+    res.json(person);
+  } else {
+    res.status(204).end();
+  }
+});
+
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
