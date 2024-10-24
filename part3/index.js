@@ -70,25 +70,22 @@ const generateId = () => {
 };
 
 app.post('/api/persons', (req, res) => {
-  const person = req.body;
+  const body = req.body;
 
-  if (!person.name) {
-    res.status(400).json({ error: 'name is missing' });
-  }
-  if (!person.number) {
-    res.status(400).json({ error: 'number is missing' });
-  }
-
-  const exists = persons.find((n) => n.name === person.name);
-
-  if (exists) {
-    res.status(400).json({ error: 'name must be unique' });
+  if (!body.name || !body.number) {
+    return res.status(400).json({
+      error: 'name or number missing',
+    });
   }
 
-  person.id = generateId();
+  const person = new Person({
+    name: body.name,
+    number: body.number,
+  });
 
-  persons = persons.concat(person);
-  res.json(person);
+  person.save().then((savedPerson) => {
+    res.json(savedPerson);
+  });
 });
 
 const PORT = process.env.PORT || 3001;
