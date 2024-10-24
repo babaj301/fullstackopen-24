@@ -72,19 +72,13 @@ const generateId = () => {
 app.post('/api/persons', (req, res) => {
   const body = req.body;
 
-  if (!body.name || !body.number) {
-    return res.status(400).json({
-      error: 'name or number missing',
-    });
-  }
-
   const person = new Person({
     name: body.name,
     number: body.number,
   });
 
-  person.save().then((savedPerson) => {
-    res.json(savedPerson);
+  person.save().then((person) => {
+    res.json(person);
   });
 });
 
