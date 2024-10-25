@@ -60,7 +60,7 @@ app.get('/api/persons', (req, res) => {
 });
 
 // To get specific person
-app.get('/api/persons/:id', (req, res) => {
+app.get('/api/persons/:id', (req, res, next) => {
   Person.findById(req.params.id).then((person) => {
     res.json(person);
   });
@@ -78,7 +78,7 @@ app.delete('/api/persons/:id', (req, res, next) => {
 });
 
 // To add a new person to the phonebook
-app.post('/api/persons', (req, res) => {
+app.post('/api/persons', (req, res, next) => {
   const body = req.body;
 
   const person = new Person({
@@ -86,9 +86,32 @@ app.post('/api/persons', (req, res) => {
     number: body.number,
   });
 
-  person.save().then((person) => {
-    res.json(person);
-  });
+  person
+    .save()
+    .then((person) => {
+      res.json(person);
+    })
+    .catch((error) => {
+      next(error);
+    });
+});
+
+// To handle the user being able to update the number of an existing person
+app.put('/api/persons/:id', (req, res, next) => {
+  const body = req.body;
+
+  const person = {
+    name: body.name,
+    number: body.number,
+  };
+
+  Person.findByIdAndUpdate(req.params.id, person, { new: true })
+    .then((updatedPerson) => {
+      res.json(updatedPerson);
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
 
 // For handling unknown endpoints that are not among the routes
