@@ -138,6 +138,5 @@ const errorHandler = (error, req, res, next) => {
 };
 // handler of requests with result to errors
 app.use(errorHandler);
-
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
