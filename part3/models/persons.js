@@ -20,7 +20,18 @@ const personSchema = new mongoose.Schema({
     minLength: 3,
     required: true,
   },
-  number: String,
+  number: {
+    type: String,
+    minLength: 8,
+    validate: {
+      validator: function (str) {
+        const [firstPart, secondPart] = str.split('-');
+        return (
+          firstPart.length >= 2 && firstPart.length <= 3 && Number(secondPart)
+        );
+      },
+    },
+  },
 });
 
 const Person = mongoose.model('Person', personSchema);
