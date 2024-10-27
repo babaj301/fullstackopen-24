@@ -70,10 +70,20 @@ const App = () => {
           setTimeout(() => {
             setPopup(null);
           }, 3000);
+
           setNewName('');
           setNewNumber('');
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          setPopup(`${err.response.data.error}`);
+
+          setTimeout(() => {
+            setPopup(null);
+          }, 3000);
+          setNewName('');
+          setNewNumber('');
+          console.log(err.response.data.error);
+        });
     }
   };
 
