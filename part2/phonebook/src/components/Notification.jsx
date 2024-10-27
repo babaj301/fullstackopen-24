@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Notification = ({ message }) => {
+const Notification = ({ message, isError }) => {
   if (message === null) {
     return null;
   }
 
-  return <div className="notification">{message}</div>;
+  return <div className={!isError ? 'notification' : 'error'}>{message}</div>;
 };
 
 export default Notification;

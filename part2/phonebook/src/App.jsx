@@ -11,6 +11,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('');
   const [search, setSearch] = useState('');
   const [popup, setPopup] = useState(null);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     console.log('effect');
@@ -75,6 +76,7 @@ const App = () => {
           setNewNumber('');
         })
         .catch((err) => {
+          setIsError(!isError);
           setPopup(`${err.response.data.error}`);
 
           setTimeout(() => {
@@ -134,7 +136,7 @@ const App = () => {
 
       <Filter search={search} handleSearch={handleSearch} />
       <h2>add a new</h2>
-      <Notification message={popup} />
+      <Notification isError={isError} message={popup} />
 
       <PersonForm
         handleSubmit={handleSubmit}
