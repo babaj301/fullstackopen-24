@@ -88,8 +88,38 @@ const mostBlogs = (blogs) => {
   return result.filter((blog) => blog.blogs === maxBlogs);
 };
 
-console.log(mostBlogs(blogs));
+const mostLikes = (blogs) => {
+  const authors = blogs.map((blog) => {
+    return blog.author;
+  });
+  const uniqueAuthorsSet = new Set(authors);
+  const uniqueAuthors = [...uniqueAuthorsSet];
+  const likes = blogs.map((blogs) => {
+    return blogs.likes;
+  });
 
+  console.log(likes);
+  const maxLike = Math.max(...likes);
+
+  const result = blogs.find((blog) => {
+    return blog.likes === maxLike;
+  });
+
+  const resultAuth = result.author;
+
+  const arrOfAuthBlogs = blogs.filter((blog) => {
+    return blog.author === resultAuth;
+  });
+  const likesSum = arrOfAuthBlogs.reduce(
+    (acc, blogLike) => acc + blogLike.likes,
+    0
+  );
+
+  return {
+    author: resultAuth,
+    likes: likesSum,
+  };
+};
 module.exports = {
   dummy,
   totalLikes,
