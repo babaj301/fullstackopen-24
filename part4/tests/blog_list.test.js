@@ -41,6 +41,13 @@ test("blogs are returned as json", async () => {
     .expect("Content-Type", /application\/json/);
 });
 
+test("blog has id", async () => {
+  const result = await api.get("/api/blogs");
+  console.log(result.body);
+  const blogs = result.body;
+  assert.strictEqual(blogs[0].hasOwnProperty("id"), true);
+});
+
 after(async () => {
   await mongoose.connection.close();
 });
