@@ -43,9 +43,27 @@ test("blogs are returned as json", async () => {
 
 test("blog has id", async () => {
   const result = await api.get("/api/blogs");
-  console.log(result.body);
   const blogs = result.body;
   assert.strictEqual(blogs[0].hasOwnProperty("id"), true);
+});
+
+test("creates new blog post", async () => {
+  const newBlog = {
+    title: " Just testing",
+    author: " Babajide Oluwaferanmi",
+    url: " fakesitethatleadsnowhere.com",
+    likes: 69,
+  };
+  await api
+    .post("/api/blogs")
+    .send(newBlog)
+    .expect(201)
+    .expect("Content-Type", /application\/json/);
+
+  const result = await api.get("/api/blogs");
+  const allBlogs = result.body;
+
+  assert.strictEqual(allBlogs.body.length, 4);
 });
 
 after(async () => {
