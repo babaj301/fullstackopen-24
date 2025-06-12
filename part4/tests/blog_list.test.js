@@ -84,6 +84,22 @@ test("post without likes defaults to 0", async () => {
   assert.strictEqual(allBlogs[3].likes, 0);
 });
 
+test("missing data returns bad request", async () => {
+  const newBlog = {
+    author: "Babajide Oluwaferanmi",
+    url: "fakesitethatleadsnowhere.com",
+    likes: 69,
+  };
+  await api.post("/api/blogs").send(newBlog).expect(400);
+
+  const result = await api.get("/api/blogs");
+  const allBlogs = result.body;
+
+  console.log(allBlogs);
+
+  assert.strictEqual(allBlogs.length, 3);
+});
+
 after(async () => {
   await mongoose.connection.close();
 });
