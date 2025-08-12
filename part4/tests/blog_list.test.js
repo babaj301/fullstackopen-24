@@ -95,9 +95,33 @@ test("missing data returns bad request", async () => {
   const result = await api.get("/api/blogs");
   const allBlogs = result.body;
 
-  console.log(allBlogs);
-
   assert.strictEqual(allBlogs.length, 3);
+});
+
+test("deletes a single blog post", async () => {
+  const getBlogs = await api.get("/api/blogs");
+  const allBlogs = getBlogs.body;
+
+  const blogToDelete = allBlogs[0];
+
+  await api.delete(`/api/blogs/${blogToDelete.id}`).expect(204);
+
+  const result = await api.get("/api/blogs");
+  const blogsAfter = result.body;
+
+  assert.strictEqual(blogsAfter.length, initialBlogs.length - 1);
+});
+
+test("updates information of individual blog", async () => {
+  // Get all the blogs from the database
+  const getBlogs = await api.get("/api/blogs");
+  const result = getBlogs.body;
+  // Get the blog i want to edit out if it using the id
+  const blogToUpdate = result[0];
+  // Edit the object likes and save that in a newBlog variable
+  const editedBlog = Object;
+  //Send the put request
+  // get all the blogs again then check if the likes change
 });
 
 after(async () => {
